@@ -1,11 +1,12 @@
-// VibeAudit Scan — GitHub Action (no dependencies; Node 20 has fetch).
+// VibeAudit Scan — GitHub Action (no dependencies, no build step: this file is the whole action).
 // 1. Get the workflow's OIDC token (proves which repo is calling; no API key needed).
 // 2. Ask vibeaudit.sh to run a free quick scan of this public repo (one per repo per day; repeats reuse the report).
 // 3. Poll until done, write a job summary, optionally upsert a PR comment, optionally fail below a score.
 const fs = require("node:fs");
 
 const SITE = process.env.VIBEAUDIT_SITE || "https://vibeaudit.sh";
-const input = (name, def) => (process.env[`INPUT_${name.toUpperCase().replace(/-/g, "_")}`] ?? def).trim();
+// GitHub exposes inputs as INPUT_<NAME> with the name upper-cased and hyphens kept (INPUT_FAIL-BELOW).
+const input = (name, def) => (process.env[`INPUT_${name.toUpperCase()}`] ?? def).trim();
 const log = (m) => console.log(m);
 const fail = (m) => { console.log(`::error::${m}`); process.exit(1); };
 const setOutput = (k, v) => { if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `${k}=${v}\n`); };

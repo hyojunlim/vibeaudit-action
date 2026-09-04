@@ -34,6 +34,8 @@ That's the whole setup. No account, no token, no secrets.
 
 ## How it works
 
+The whole action is one dependency-free file, [`src/index.js`](src/index.js) — read it before you trust it.
+
 The action requests the workflow's OIDC token from GitHub and sends it to `vibeaudit.sh`, which verifies it against GitHub's public keys and reads the `repository` claim. The service then downloads the public repository tarball, selects the highest-risk files, and runs a Claude quick scan. Nothing is cloned to the runner and nothing from your repo is stored beyond the report.
 
 Limits: public repositories only; one free quick scan per repository per day (further runs that day reuse the report). The full deep audit of the whole codebase, with a fix prompt for every finding, is available from the report page.

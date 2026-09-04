@@ -23,5 +23,5 @@ outputs:
   report-url:
     description: "URL of the full report on vibeaudit.sh."
 runs:
-  using: "node20"
-  main: "dist/index.js"
+  using: "node24"
+  main: "src/index.js"
