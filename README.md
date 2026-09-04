@@ -45,3 +45,5 @@ Only the repository name leaves the runner (inside a token GitHub signed for thi
 ## License
 
 MIT
+
+<!-- self-test: PR comment path -->
