@@ -1,0 +1,27 @@
+name: "VibeAudit Scan"
+description: "Pre-launch security & bug scan for AI-built apps. Posts a launch-readiness score and the top findings on every PR."
+author: "VibeAudit"
+branding:
+  icon: "shield"
+  color: "green"
+inputs:
+  comment:
+    description: "Post (and update) a summary comment on the pull request. Needs `pull-requests: write`."
+    required: false
+    default: "true"
+  fail-below:
+    description: "Fail the job if the launch-readiness score is below this number (0 = never fail)."
+    required: false
+    default: "0"
+  github-token:
+    description: "Token used to post the PR comment."
+    required: false
+    default: ${{ github.token }}
+outputs:
+  score:
+    description: "Launch-readiness score (0-100)."
+  report-url:
+    description: "URL of the full report on vibeaudit.sh."
+runs:
+  using: "node20"
+  main: "dist/index.js"
